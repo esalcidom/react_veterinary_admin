@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import uuid from 'uuid';
+import PropTypes from 'prop-types';
 
 const stateInicial = {
     cita: {
@@ -151,6 +152,10 @@ class NewDate extends Component{
         </div>
         );
     }
+}
+
+NewDate.propTypes = {
+    createNewDate : PropTypes.func.isRequired
 }
 
 export default NewDate;

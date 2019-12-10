@@ -9,11 +9,37 @@ class App extends Component{
     dates: []
   }
 
+  // Cuando la app carga obtenemos lo que hay en local storage
+  componentDidMount(){
+    const datesLS = localStorage.getItem('dates');
+    if(datesLS){
+      this.setState({
+        dates : JSON.parse(datesLS)
+      })
+    }
+  }
+
+  // Cuando eliminamos o agregamos una cita en storage
+  componentDidUpdate(){
+    localStorage.setItem('dates', JSON.stringify(this.state.dates));
+  }
+
   createNewDate = data => {
     //copiar el state actual
     const citas = [...this.state.dates, data];
     //agregar el nuevo state
     this.setState({dates: citas})
+  }
+
+
+  //elimina las citas del state
+  deleteDate = id => {
+    //tomar copia de state
+    const actualDates = [...this.state.dates];
+    //utilizar filter para obtener el elemento del arreglo
+    const dates = actualDates.filter(date => date.id !== id);
+    //utilizar state
+    this.setState({dates});
   }
 
   render(){
@@ -32,6 +58,7 @@ class App extends Component{
           <div className="mt-5 col-md-10 mx-auto">
             <DateList 
               dates={this.state.dates}
+              deleteDate={this.deleteDate}
             />
           </div>
         </div>
